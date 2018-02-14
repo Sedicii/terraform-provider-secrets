@@ -4,15 +4,16 @@ import (
 	"crypto/aes"
 	"crypto/cipher"
 	"crypto/rand"
-	"crypto/sha1"
 	"encoding/hex"
-	"golang.org/x/crypto/pbkdf2"
+	"golang.org/x/crypto/argon2"
 	"io"
 )
 
 const saltSize = 32
 const aesKeySize = 32
-const pbkdf2Iters = 4096
+const argonTimes = 3
+const argonMemory = 32 * 1024
+const argonThreads = 4
 
 func getRandomBytes(number int) ([]byte, error) {
 	randomBytes := make([]byte, number)
@@ -23,7 +24,7 @@ func getRandomBytes(number int) ([]byte, error) {
 }
 
 func passwordToKey(password []byte, salt []byte) []byte {
-	return pbkdf2.Key(password, salt, pbkdf2Iters, aesKeySize, sha1.New)
+	return argon2.Key(password, salt, argonTimes, argonMemory, argonThreads, aesKeySize)
 }
 
 func EncryptAES256withGCM(password []byte, data []byte) (encryptedData []byte, salt []byte, nonce []byte, err error) {

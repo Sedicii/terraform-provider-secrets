@@ -5,8 +5,8 @@ The philosophy of this provider is the same as chef's encrypted data bags.
 This provider is composed of the provider itself and a cli tool called tf-secrets to manage encrypted terraform vars.
 
 The crypto algorithms used are :
- * PBKDF2 [RFC-2898](https://www.ietf.org/rfc/rfc2898.txt) as key generation algorithm
- * AES256 [RFC-]()
+ * Argon2 as key generation algorithm
+ * AES256 as block cipher algorithm 
 
 ### Maintainers
 
