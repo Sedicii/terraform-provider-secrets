@@ -9,7 +9,7 @@ func TestEncryptDecryptCycle(t *testing.T) {
 	data := "test_data"
 	password := "test_password"
 
-	encryptedData, salt, nonce, err := EncryptAES256withGCM([]byte(password), []byte(data))
+	encryptedData, salt, nonce, err := EncryptAES256withGCM([]byte(data), []byte(password))
 	if err != nil {
 		t.Fail()
 	}

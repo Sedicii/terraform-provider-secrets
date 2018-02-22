@@ -8,7 +8,8 @@ import (
 func Provider() terraform.ResourceProvider {
 	return &schema.Provider{
 		DataSourcesMap: map[string]*schema.Resource{
-			"secrets_decrypt": secretsDecrypt(),
+			"secrets_decrypt":      secretsDecrypt(),
+			"secrets_file_decrypt": fileDecrypt(),
 		},
 	}
 }

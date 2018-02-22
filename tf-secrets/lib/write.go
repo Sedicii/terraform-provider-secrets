@@ -1,6 +1,7 @@
 package lib
 
 import (
+	"encoding/json"
 	"fmt"
 	"io"
 )
@@ -31,6 +32,18 @@ func WriteEncryptedVarsAsHCL(writer io.Writer, encryptedVars *map[string]map[str
 		if err != nil {
 			return
 		}
+	}
+	return
+}
+
+func WriteEncryptedFile(writer io.Writer, encryptedFile *map[string]string) (err error) {
+	fileContent, err := json.Marshal(encryptedFile)
+	if err != nil {
+		return
+	}
+	_, err = writer.Write(fileContent)
+	if err != nil {
+		return
 	}
 	return
 }

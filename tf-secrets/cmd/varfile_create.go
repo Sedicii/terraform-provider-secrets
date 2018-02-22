@@ -13,7 +13,7 @@ var createCmd = &cobra.Command{
 	Short: "Creates the new .secrets.tfvars file specified",
 	Long:  `Creates the new .secrets.tfvars file specified`,
 	Run: func(cmd *cobra.Command, args []string) {
-		err := createFile(*varFile, *password)
+		err := createVarFile(*filePath, *password)
 		if err != nil {
 			fmt.Fprintln(os.Stderr, err)
 			os.Exit(1)
@@ -22,10 +22,10 @@ var createCmd = &cobra.Command{
 }
 
 func init() {
-	rootCmd.AddCommand(createCmd)
+	varFileCmd.AddCommand(createCmd)
 }
 
-func createFile(filePath string, password string) error {
+func createVarFile(filePath string, password string) error {
 	tmpFile, err := ioutil.TempFile("/tmp", "tf-secrets")
 
 	if err != nil {
@@ -36,5 +36,5 @@ func createFile(filePath string, password string) error {
 	tmpFile.Close()
 	tmpFileName := tmpFile.Name()
 
-	return editFileAndEncrypt(tmpFileName, password, filePath)
+	return editVarFileAndEncrypt(tmpFileName, password, filePath)
 }

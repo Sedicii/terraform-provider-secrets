@@ -1,6 +1,7 @@
 package lib
 
 import (
+	"encoding/json"
 	"fmt"
 	"github.com/hashicorp/hcl"
 	"io/ioutil"
@@ -105,4 +106,17 @@ func ReadHCLDecryptedVarFile(filePath string) (*map[string]string, error) {
 	}
 
 	return &decryptedVars, nil
+}
+
+func ReadEncryptedFile(filePath string) (*map[string]string, error) {
+	encryptedFile, err := ioutil.ReadFile(filePath)
+	if err != nil {
+		return nil, err
+	}
+	encryptedFileContent := make(map[string]string)
+	err = json.Unmarshal(encryptedFile, &encryptedFileContent)
+	if err != nil {
+		return nil, err
+	}
+	return &encryptedFileContent, nil
 }

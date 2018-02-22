@@ -6,20 +6,22 @@ import (
 	"os"
 )
 
-var varFile *string
+var filePath *string
 var password *string
+var newPassword *string
+var dstFilePath *string
 
 var rootCmd = &cobra.Command{
 	Use:   "tf-secrets",
 	Short: "tf-secret is the tool to handle .secrets.tfvars files used by the secrets terraform provider",
 	Long:  `tf-secret is the tool to handle .secrets.tfvars files used by the secrets terraform provider`,
 	Run: func(cmd *cobra.Command, args []string) {
-		// Do Stuff Here
+		cmd.Help()
 	},
 }
 
 func init() {
-	varFile = rootCmd.PersistentFlags().StringP("file", "f", "", "")
+	filePath = rootCmd.PersistentFlags().StringP("file", "f", "", "")
 	password = rootCmd.PersistentFlags().StringP("password", "p", "", "")
 }
 

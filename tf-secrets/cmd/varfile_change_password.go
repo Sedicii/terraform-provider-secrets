@@ -8,14 +8,12 @@ import (
 	"os"
 )
 
-var newPassword *string
-
 var changePasswordCmd = &cobra.Command{
 	Use:   "change-password",
 	Short: "Changes the password a specified .secrets.tfvars file",
 	Long:  `Changes the password a specified .secrets.tfvars file`,
 	Run: func(cmd *cobra.Command, args []string) {
-		err := changePasswordFile(*varFile, *password, *newPassword)
+		err := changePasswordVarFile(*filePath, *password, *newPassword)
 		if err != nil {
 			fmt.Fprintln(os.Stderr, err)
 			os.Exit(1)
@@ -25,10 +23,10 @@ var changePasswordCmd = &cobra.Command{
 
 func init() {
 	newPassword = changePasswordCmd.PersistentFlags().StringP("new-password", "n", "", "")
-	rootCmd.AddCommand(changePasswordCmd)
+	varFileCmd.AddCommand(changePasswordCmd)
 }
 
-func changePasswordFile(filePath string, password string, new_password string) error {
+func changePasswordVarFile(filePath string, password string, newPassword string) error {
 	encryptedVars, err := lib.ReadHCLEncryptedVarFile(filePath)
 	if err != nil {
 		return errors.New(fmt.Sprintf("Error parsing file %s : %s", filePath, err))
@@ -38,13 +36,13 @@ func changePasswordFile(filePath string, password string, new_password string) e
 		return errors.New(fmt.Sprintf("Error decrypting vars from file %s : %s", filePath, err))
 	}
 
-	encryptedVars, err = lib.EncryptVars(&decryptedVars, *newPassword)
+	encryptedVars, err = lib.EncryptVars(&decryptedVars, newPassword)
 
 	if err != nil {
 		return errors.New(fmt.Sprintf("Error encrypting vars : %s", err))
 	}
 
-	varFile, err := os.OpenFile(filePath, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, 0644)
+	varFile, err := os.OpenFile(filePath, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, 0600)
 
 	if err != nil {
 		return errors.New(fmt.Sprintf("Error opening var file %s : %s", filePath, err))

@@ -27,7 +27,7 @@ func passwordToKey(password []byte, salt []byte) []byte {
 	return argon2.Key(password, salt, argonTimes, argonMemory, argonThreads, aesKeySize)
 }
 
-func EncryptAES256withGCM(password []byte, data []byte) (encryptedData []byte, salt []byte, nonce []byte, err error) {
+func EncryptAES256withGCM(data []byte, password []byte) (encryptedData []byte, salt []byte, nonce []byte, err error) {
 
 	if salt, err = getRandomBytes(saltSize); err != nil {
 		return
@@ -76,7 +76,7 @@ func DecryptAES256withGCM(encryptedData []byte, salt []byte, nonce []byte, passw
 }
 
 func HexEncryptAES256(data string, password string) (encodedEncryptedData string, encodedSalt string, encodedNonce string, err error) {
-	encryptedData, salt, nonce, err := EncryptAES256withGCM([]byte(password), []byte(data))
+	encryptedData, salt, nonce, err := EncryptAES256withGCM([]byte(data), []byte(password))
 	if err != nil {
 		return
 	}

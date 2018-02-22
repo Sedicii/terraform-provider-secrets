@@ -14,7 +14,7 @@ var editCmd = &cobra.Command{
 	Short: "Edits a specified .secrets.tfvars file",
 	Long:  `All software has versions. This is Hugo's`,
 	Run: func(cmd *cobra.Command, args []string) {
-		err := editFile(*varFile, *password)
+		err := editVarFile(*filePath, *password)
 		if err != nil {
 			fmt.Fprintln(os.Stderr, err)
 			os.Exit(1)
@@ -23,10 +23,10 @@ var editCmd = &cobra.Command{
 }
 
 func init() {
-	rootCmd.AddCommand(editCmd)
+	varFileCmd.AddCommand(editCmd)
 }
 
-func editFile(filePath string, password string) error {
+func editVarFile(filePath string, password string) error {
 	encryptedVars, err := lib.ReadHCLEncryptedVarFile(filePath)
 	if err != nil {
 		return errors.New(fmt.Sprintf("Error parsing file %s : %s", filePath, err))
@@ -52,10 +52,10 @@ func editFile(filePath string, password string) error {
 	tmpFile.Close()
 	tmpFileName := tmpFile.Name()
 
-	return editFileAndEncrypt(tmpFileName, password, filePath)
+	return editVarFileAndEncrypt(tmpFileName, password, filePath)
 }
 
-func editFileAndEncrypt(tmpFileName string, password string, varFilePath string) error {
+func editVarFileAndEncrypt(tmpFileName string, password string, varFilePath string) error {
 
 	lib.EditFileWithEditor(tmpFileName)
 

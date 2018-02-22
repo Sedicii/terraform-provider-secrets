@@ -13,7 +13,7 @@ var catCmd = &cobra.Command{
 	Short: "outputs by stdout a specified .secrets.tfvars file",
 	Long:  `outputs by stdout a specified .secrets.tfvars file`,
 	Run: func(cmd *cobra.Command, args []string) {
-		err := catFile(*varFile, *password)
+		err := catVarFile(*filePath, *password)
 		if err != nil {
 			fmt.Fprintln(os.Stderr, err)
 			os.Exit(1)
@@ -22,10 +22,10 @@ var catCmd = &cobra.Command{
 }
 
 func init() {
-	rootCmd.AddCommand(catCmd)
+	varFileCmd.AddCommand(catCmd)
 }
 
-func catFile(filePath string, password string) error {
+func catVarFile(filePath string, password string) error {
 	encryptedVars, err := lib.ReadHCLEncryptedVarFile(filePath)
 	if err != nil {
 		return errors.New(fmt.Sprintf("Error parsing file %s : %s", filePath, err))
