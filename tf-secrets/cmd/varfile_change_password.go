@@ -13,16 +13,17 @@ var changePasswordCmd = &cobra.Command{
 	Short: "Changes the password a specified .secrets.tfvars file",
 	Long:  `Changes the password a specified .secrets.tfvars file`,
 	Run: func(cmd *cobra.Command, args []string) {
-		err := changePasswordVarFile(*filePath, *password, *newPassword)
+		err := changePasswordVarFile(*filePath, *password, *varFileNewPassword)
 		if err != nil {
 			fmt.Fprintln(os.Stderr, err)
 			os.Exit(1)
 		}
 	},
 }
+var varFileNewPassword *string
 
 func init() {
-	newPassword = changePasswordCmd.PersistentFlags().StringP("new-password", "n", "", "")
+	varFileNewPassword = changePasswordCmd.PersistentFlags().StringP("new-password", "n", "", "")
 	varFileCmd.AddCommand(changePasswordCmd)
 }
 

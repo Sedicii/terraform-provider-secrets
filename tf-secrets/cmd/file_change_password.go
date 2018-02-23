@@ -13,16 +13,17 @@ var fileChangePasswordCmd = &cobra.Command{
 	Short: "",
 	Long:  ``,
 	Run: func(cmd *cobra.Command, args []string) {
-		err := changePasswordFile(*filePath, *password, *newPassword)
+		err := changePasswordFile(*filePath, *password, *fileNewPassword)
 		if err != nil {
 			fmt.Fprintln(os.Stderr, err)
 			os.Exit(1)
 		}
 	},
 }
+var fileNewPassword *string
 
 func init() {
-	newPassword = fileChangePasswordCmd.PersistentFlags().StringP("new-password", "n", "", "")
+	fileNewPassword = fileChangePasswordCmd.PersistentFlags().StringP("new-password", "n", "", "")
 	fileCmd.AddCommand(fileChangePasswordCmd)
 }
 

@@ -14,7 +14,7 @@ var fileEncryptCmd = &cobra.Command{
 	Short: "",
 	Long:  ``,
 	Run: func(cmd *cobra.Command, args []string) {
-		err := encryptFile(*filePath, *dstFilePath, *password)
+		err := encryptFile(*filePath, *encryptDstFilePath, *password)
 		if err != nil {
 			fmt.Fprintln(os.Stderr, err)
 			os.Exit(1)
@@ -22,8 +22,10 @@ var fileEncryptCmd = &cobra.Command{
 	},
 }
 
+var encryptDstFilePath *string
+
 func init() {
-	dstFilePath = fileEncryptCmd.PersistentFlags().StringP("dst-file", "-d", "", "")
+	encryptDstFilePath = fileEncryptCmd.PersistentFlags().StringP("dst-file", "d", "", "")
 	fileCmd.AddCommand(fileEncryptCmd)
 }
 

@@ -10,11 +10,11 @@ import (
 )
 
 var fileDecryptCmd = &cobra.Command{
-	Use:   "encrypt",
+	Use:   "decrypt",
 	Short: "",
 	Long:  ``,
 	Run: func(cmd *cobra.Command, args []string) {
-		err := decryptFile(*filePath, *dstFilePath, *password)
+		err := decryptFile(*filePath, *decryptDstFilePath, *password)
 		if err != nil {
 			fmt.Fprintln(os.Stderr, err)
 			os.Exit(1)
@@ -22,8 +22,10 @@ var fileDecryptCmd = &cobra.Command{
 	},
 }
 
+var decryptDstFilePath *string
+
 func init() {
-	dstFilePath = fileDecryptCmd.PersistentFlags().StringP("dst-file", "-d", "", "")
+	decryptDstFilePath = fileDecryptCmd.PersistentFlags().StringP("dst-file", "d", "", "")
 	fileCmd.AddCommand(fileDecryptCmd)
 }
 
@@ -40,6 +42,7 @@ func decryptFile(filePath string, dstFilePath string, password string) error {
 	}
 	err = ioutil.WriteFile(dstFilePath, decryptedData, 600)
 	if err != nil {
+		fmt.Println(dstFilePath)
 		return errors.New(fmt.Sprintf("Error writing file %s : %s", dstFilePath, err))
 	}
 	return nil

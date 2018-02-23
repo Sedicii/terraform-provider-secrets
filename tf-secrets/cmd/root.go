@@ -8,8 +8,6 @@ import (
 
 var filePath *string
 var password *string
-var newPassword *string
-var dstFilePath *string
 
 var rootCmd = &cobra.Command{
 	Use:   "tf-secrets",
