@@ -1,4 +1,4 @@
-package cmd
+package file
 
 import (
 	"errors"
@@ -11,8 +11,8 @@ import (
 
 var fileDecryptCmd = &cobra.Command{
 	Use:   "decrypt",
-	Short: "",
-	Long:  ``,
+	Short: "Decrypts a .secret file",
+	Long:  `Decrypts a .secret file`,
 	Run: func(cmd *cobra.Command, args []string) {
 		err := decryptFile(*filePath, *decryptDstFilePath, *password)
 		if err != nil {
@@ -26,7 +26,10 @@ var decryptDstFilePath *string
 
 func init() {
 	decryptDstFilePath = fileDecryptCmd.PersistentFlags().StringP("dst-file", "d", "", "")
-	fileCmd.AddCommand(fileDecryptCmd)
+	fileDecryptCmd.MarkFlagRequired("dst-file")
+	fileDecryptCmd.MarkPersistentFlagFilename("dst-file")
+
+	FileCmd.AddCommand(fileDecryptCmd)
 }
 
 func decryptFile(filePath string, dstFilePath string, password string) error {

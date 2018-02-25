@@ -1,4 +1,4 @@
-package cmd
+package varfile
 
 import (
 	"errors"
@@ -12,7 +12,7 @@ import (
 var editCmd = &cobra.Command{
 	Use:   "edit",
 	Short: "Edits a specified .secrets.tfvars file",
-	Long:  `All software has versions. This is Hugo's`,
+	Long:  `Edits a specified .secrets.tfvars file`,
 	Run: func(cmd *cobra.Command, args []string) {
 		err := editVarFile(*filePath, *password)
 		if err != nil {
@@ -23,7 +23,7 @@ var editCmd = &cobra.Command{
 }
 
 func init() {
-	varFileCmd.AddCommand(editCmd)
+	VarFileCmd.AddCommand(editCmd)
 }
 
 func editVarFile(filePath string, password string) error {

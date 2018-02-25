@@ -1,4 +1,4 @@
-package cmd
+package file
 
 import (
 	"errors"
@@ -10,8 +10,8 @@ import (
 
 var fileChangePasswordCmd = &cobra.Command{
 	Use:   "change-password",
-	Short: "",
-	Long:  ``,
+	Short: "Changes the password of a .secret file",
+	Long:  `Changes the password of a .secret file`,
 	Run: func(cmd *cobra.Command, args []string) {
 		err := changePasswordFile(*filePath, *password, *fileNewPassword)
 		if err != nil {
@@ -24,7 +24,9 @@ var fileNewPassword *string
 
 func init() {
 	fileNewPassword = fileChangePasswordCmd.PersistentFlags().StringP("new-password", "n", "", "")
-	fileCmd.AddCommand(fileChangePasswordCmd)
+	fileChangePasswordCmd.MarkFlagRequired("new-password")
+
+	FileCmd.AddCommand(fileChangePasswordCmd)
 }
 
 func changePasswordFile(filePath string, password string, newPassword string) error {

@@ -1,4 +1,4 @@
-package cmd
+package varfile
 
 import (
 	"errors"
@@ -10,8 +10,8 @@ import (
 
 var catCmd = &cobra.Command{
 	Use:   "cat",
-	Short: "outputs by stdout a specified .secrets.tfvars file",
-	Long:  `outputs by stdout a specified .secrets.tfvars file`,
+	Short: "Outputs by stdout a specified .secrets.tfvars file in clear",
+	Long:  `Outputs by stdout a specified .secrets.tfvars file in clear`,
 	Run: func(cmd *cobra.Command, args []string) {
 		err := catVarFile(*filePath, *password)
 		if err != nil {
@@ -22,7 +22,7 @@ var catCmd = &cobra.Command{
 }
 
 func init() {
-	varFileCmd.AddCommand(catCmd)
+	VarFileCmd.AddCommand(catCmd)
 }
 
 func catVarFile(filePath string, password string) error {

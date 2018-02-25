@@ -233,6 +233,12 @@
 			"revisionTime": "2017-07-27T06:48:18Z"
 		},
 		{
+			"checksumSHA1": "00wtByhdiRe1Q1nOYEqaQzWkrkI=",
+			"path": "github.com/cpuguy83/go-md2man/md2man",
+			"revision": "48d8747a2ca13185e7cc8efe6e9fc196a83f71a5",
+			"revisionTime": "2018-02-15T02:17:27Z"
+		},
+		{
 			"checksumSHA1": "dvabztWVQX8f6oMLRyv4dLH+TGY=",
 			"path": "github.com/davecgh/go-spew/spew",
 			"revision": "346938d642f2ec3594ed81d874461961cd0faa76",
@@ -630,10 +636,22 @@
 			"revisionTime": "2017-04-07T04:09:43Z"
 		},
 		{
+			"checksumSHA1": "OnCHuYYPIZycyCb0gQ8Ua+Blp3U=",
+			"path": "github.com/russross/blackfriday",
+			"revision": "55d61fa8aa702f59229e6cff85793c22e580eaf5",
+			"revisionTime": "2018-02-18T09:36:01Z"
+		},
+		{
 			"checksumSHA1": "zmC8/3V4ls53DJlNTKDZwPSC/dA=",
 			"path": "github.com/satori/go.uuid",
 			"revision": "b061729afc07e77a8aa4fad0a2fd840958f1942a",
 			"revisionTime": "2016-09-27T10:08:44Z"
+		},
+		{
+			"checksumSHA1": "HkNUuhYSk5C2fTMa536jBiORq44=",
+			"path": "github.com/shurcooL/sanitized_anchor_name",
+			"revision": "86672fcb3f950f35f2e675df2240550f2a50762f",
+			"revisionTime": "2017-09-05T02:47:45Z"
 		},
 		{
 			"checksumSHA1": "F3JU4T4XXvZTRAcv6rhTao4QGos=",
@@ -670,6 +688,12 @@
 			"path": "github.com/spf13/cobra/cobra/cmd",
 			"revision": "93959269ad99e80983c9ba742a7e01203a4c0e4f",
 			"revisionTime": "2018-02-05T22:42:58Z"
+		},
+		{
+			"checksumSHA1": "UV6A5TUHJK1cLjRq5+eLHOcrLlc=",
+			"path": "github.com/spf13/cobra/doc",
+			"revision": "a1e4933ab784095895e33dbe9f001ba10cfe2060",
+			"revisionTime": "2018-02-21T17:51:53Z"
 		},
 		{
 			"checksumSHA1": "+JFKK0z5Eutk29rUz1lEhLxHMfk=",
@@ -784,6 +808,12 @@
 			"path": "golang.org/x/text/unicode/norm",
 			"revision": "e19ae1496984b1c655b8044a65c0300a3c878dd3",
 			"revisionTime": "2017-12-24T20:31:28Z"
+		},
+		{
+			"checksumSHA1": "WrnWl9sC9qr8Ny0wkfKfnuwIxDM=",
+			"path": "gopkg.in/russross/blackfriday.v2",
+			"revision": "cadec560ec52d93835bf2f15bd794700d3a2473b",
+			"revisionTime": "2017-08-06T17:10:14Z"
 		},
 		{
 			"checksumSHA1": "qOmvuDm+F+2nQQecUZBVkZrTn6Y=",

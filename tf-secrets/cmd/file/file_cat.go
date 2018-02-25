@@ -1,4 +1,4 @@
-package cmd
+package file
 
 import (
 	"errors"
@@ -10,8 +10,8 @@ import (
 
 var fileCatCmd = &cobra.Command{
 	Use:   "cat",
-	Short: "",
-	Long:  ``,
+	Short: "Outputs by stdout a specified .secret file in clear",
+	Long:  `Outputs by stdout a specified .secret file in clear`,
 	Run: func(cmd *cobra.Command, args []string) {
 		err := catFile(*filePath, *password)
 		if err != nil {
@@ -22,7 +22,7 @@ var fileCatCmd = &cobra.Command{
 }
 
 func init() {
-	fileCmd.AddCommand(fileCatCmd)
+	FileCmd.AddCommand(fileCatCmd)
 }
 
 func catFile(filePath string, password string) error {

@@ -1,4 +1,4 @@
-package cmd
+package varfile
 
 import (
 	"errors"
@@ -22,7 +22,7 @@ var createCmd = &cobra.Command{
 }
 
 func init() {
-	varFileCmd.AddCommand(createCmd)
+	VarFileCmd.AddCommand(createCmd)
 }
 
 func createVarFile(filePath string, password string) error {

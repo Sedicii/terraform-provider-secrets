@@ -1,4 +1,4 @@
-package cmd
+package varfile
 
 import (
 	"errors"
@@ -10,8 +10,8 @@ import (
 
 var changePasswordCmd = &cobra.Command{
 	Use:   "change-password",
-	Short: "Changes the password a specified .secrets.tfvars file",
-	Long:  `Changes the password a specified .secrets.tfvars file`,
+	Short: "Changes the password of a .secrets.tfvars file",
+	Long:  `Changes the password of a .secrets.tfvars file`,
 	Run: func(cmd *cobra.Command, args []string) {
 		err := changePasswordVarFile(*filePath, *password, *varFileNewPassword)
 		if err != nil {
@@ -24,7 +24,9 @@ var varFileNewPassword *string
 
 func init() {
 	varFileNewPassword = changePasswordCmd.PersistentFlags().StringP("new-password", "n", "", "")
-	varFileCmd.AddCommand(changePasswordCmd)
+	changePasswordCmd.MarkFlagRequired("new-password")
+
+	VarFileCmd.AddCommand(changePasswordCmd)
 }
 
 func changePasswordVarFile(filePath string, password string, newPassword string) error {
