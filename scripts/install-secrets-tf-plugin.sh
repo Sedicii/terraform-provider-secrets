@@ -17,7 +17,10 @@ if [ "${OS}" == "darwin" ]; then
     curl -L ${CLI_DOWNLOAD_URL} --output ${CLI_DEST}
     chmod +x ${CLI_DEST}
 else
-    sudo curl -L ${CLI_DOWNLOAD_URL} --output ${CLI_DEST}
-    sudo chmod 755 ${CLI_DEST}
+    if [ "${UID}" != "0" ]; then
+        MAY_SUDO="sudo"
+    fi
+    ${MAY_SUDO} curl -L ${CLI_DOWNLOAD_URL} --output ${CLI_DEST}
+    ${MAY_SUDO} chmod 755 ${CLI_DEST}
 fi
 

@@ -20,7 +20,7 @@ This provider plugin is maintained by [Sedicii](https://sedicii.com/).
 ### Installation
 
 ```bash
-curl https://raw.githubusercontent.com/Sedicii/terraform-provider-secrets/master/scripts/install-secrets-tf-pluging.sh | bash
+curl https://raw.githubusercontent.com/Sedicii/terraform-provider-secrets/master/scripts/install-secrets-tf-plugin.sh | bash
 ```
 
 ### Usage
