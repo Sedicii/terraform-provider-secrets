@@ -4,8 +4,8 @@ GOFMT_FILES?=$$(find . -name '*.go' |grep -v vendor)
 default: build
 
 build: fmtcheck
-	go install
-	cd tf-secrets && go install
+	CGO_ENABLED=0 go install
+	cd tf-secrets && CGO_ENABLED=0 go install
 
 test: fmtcheck
 	go test -i $(TEST) || exit 1
