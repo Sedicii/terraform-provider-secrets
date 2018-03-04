@@ -7,8 +7,8 @@ import (
 	"bytes"
 	r "github.com/hashicorp/terraform/helper/resource"
 	"github.com/hashicorp/terraform/terraform"
-	"github.com/sedicii/terraform-provider-secrets/aes"
 	"github.com/sedicii/terraform-provider-secrets/tf-secrets/lib"
+	"strconv"
 )
 
 func TestTemplateRenderingVarFile(t *testing.T) {
@@ -25,11 +25,12 @@ func TestTemplateRenderingVarFile(t *testing.T) {
 			Providers: testProviders,
 			Steps: []r.TestStep{
 				r.TestStep{
-					Config: testTemplateConfigFile(encryptVarFile(tt.want, tt.password), tt.password),
+					Config: testTemplateConfigVarFile(encryptVarFile(tt.want, tt.password), tt.password),
 					Check: func(s *terraform.State) error {
 						got := s.RootModule().Outputs["decrypted"]
 						for k, _ := range tt.want {
-							if tt.want[k] != got.Value.(map[string]string)[k] {
+							value := got.Value.(map[string]interface{})[k].(string)
+							if tt.want[k] != value {
 								return fmt.Errorf("secret:\n%s\npassword:\n%s\ngot:\n%s\nwant:\n%s\n", encryptVarFile(tt.want, tt.password), tt.password, got, tt.want)
 							}
 						}
@@ -53,17 +54,17 @@ func encryptVarFile(vars map[string]string, password string) string {
 	if err != nil {
 		panic(err)
 	}
-	return encFileContent
+	return strconv.Quote(encFileContentW.String())
 }
 
 func testTemplateConfigVarFile(encryptedFile, password string) string {
 	str := fmt.Sprintf(`
 		data "secrets_var_file_decrypt" "t0" {
-			file = %s
+			var_file = %s
 			password = "%s"
 		}
 		output "decrypted" {
-				value = "${data.secrets_file_decrypt.t0.value}"
+				value = "${data.secrets_var_file_decrypt.t0.values}"
 		}`, encryptedFile, password)
 	fmt.Println(str)
 	return str
