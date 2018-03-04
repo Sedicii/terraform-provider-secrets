@@ -1,0 +1,17 @@
+package: github.com/sedicii/terraform-provider-secrets
+import:
+- package: github.com/hashicorp/hcl
+  version: a4b07c25de5ff55ad3b8936cea69a79a3d95a855
+- package: github.com/hashicorp/terraform
+  version: v0.11.3
+  subpackages:
+  - helper/schema
+  - plugin
+  - terraform
+- package: github.com/spf13/cobra
+  version: v0.0.1
+  subpackages:
+  - doc
+- package: golang.org/x/crypto
+  subpackages:
+  - argon2

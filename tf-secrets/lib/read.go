@@ -13,7 +13,14 @@ func ReadHCLEncryptedVarFile(filePath string) (*map[string]map[string]string, er
 		return nil, err
 	}
 
-	astFile, err := hcl.Parse(string(encryptedVarFile))
+	return ParseHCLEncryptedVarFile(string(encryptedVarFile))
+}
+
+func ParseHCLEncryptedVarFile(fileContent string) (*map[string]map[string]string, error) {
+	astFile, err := hcl.Parse(fileContent)
+	if err != nil {
+		return nil, err
+	}
 	var result map[string]interface{}
 	if err := hcl.DecodeObject(&result, astFile); err != nil {
 		return nil, fmt.Errorf(
