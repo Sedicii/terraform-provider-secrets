@@ -1,14 +1,13 @@
 package secrets
 
 import (
-	"fmt"
-	"testing"
-
 	"bytes"
+	"fmt"
 	r "github.com/hashicorp/terraform/helper/resource"
 	"github.com/hashicorp/terraform/terraform"
 	"github.com/sedicii/terraform-provider-secrets/tf-secrets/lib"
 	"strconv"
+	"testing"
 )
 
 func TestTemplateRenderingVarFile(t *testing.T) {

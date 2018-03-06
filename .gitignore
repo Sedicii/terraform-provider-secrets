@@ -29,6 +29,8 @@ website/node_modules
 vendor
 website/vendor
 
+create_doc
+
 # Test exclusions
 !command/test-fixtures/**/*.tfstate
 !command/test-fixtures/**/.terraform/
