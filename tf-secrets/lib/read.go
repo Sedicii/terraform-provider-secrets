@@ -84,32 +84,20 @@ func flattenMultiMaps(m map[string]interface{}) error {
 	return nil
 }
 
-func ReadHCLDecryptedVarFile(filePath string) (*map[string]string, error) {
+func ReadHCLDecryptedVarFile(filePath string) (*map[string]interface{}, error) {
 	decryptedVarFile, err := ioutil.ReadFile(filePath)
 	if err != nil {
 		return nil, err
 	}
 	astFile, err := hcl.Parse(string(decryptedVarFile))
-	var result map[string]interface{}
+	var decryptedVars map[string]interface{}
 
-	if err := hcl.DecodeObject(&result, astFile); err != nil {
+	if err := hcl.DecodeObject(&decryptedVars, astFile); err != nil {
 		return nil, fmt.Errorf(
 			"Error decoding Terraform vars file: %s\n\n"+
 				"The vars file should be in the format of `key = \"value\"`.\n"+
 				"Decoding errors are usually caused by an invalid format.",
 			err)
-	}
-
-	decryptedVars := make(map[string]string)
-
-	for k, v := range result {
-		switch v.(type) {
-		case string:
-			decryptedVars[k] = v.(string)
-			break
-		default:
-			return nil, fmt.Errorf("wrong type for value of key %s, secrets vars can only be strings", k)
-		}
 	}
 
 	return &decryptedVars, nil

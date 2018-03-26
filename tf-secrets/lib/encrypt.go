@@ -1,17 +1,51 @@
 package lib
 
-import "github.com/sedicii/terraform-provider-secrets/aes"
+import (
+	"github.com/sedicii/terraform-provider-secrets/aes"
+	"github.com/aws/aws-sdk-go/aws/credentials"
+)
 
-func EncryptVars(decryptedVars *map[string]string, password string) (*map[string]map[string]string, error) {
-	encryptedVars := make(map[string]map[string]string)
+func EncryptVars(decryptedVars *map[string]interface{}, password string) (*map[string]interface{}, error) {
+	encryptedVars := make(map[string]interface{})
 	for key, value := range *decryptedVars {
-		encryptedValue, err := EncryptData(value, password)
-		if err != nil {
-			return nil, err
+		switch v :=value.(type) {
+		case map[string]interface{}:
+			subEncryptedVars, err := EncryptVars(&v, password)
+			if err != nil {return nil, err}
+			encryptedVars[key] = subEncryptedVars
+		case string:
+			encryptedVar, err := EncryptData(v, password)
+			if err != nil {return nil, err}
+			encryptedVars[key] = encryptedVar
+		case []interface{}:
+			encryptedVarsList, err := EncryptVarsList(&v, password)
+			if err != nil {return nil, err}
+			encryptedVars[key] = encryptedVarsList
+			}
 		}
-		encryptedVars[key] = encryptedValue
-	}
 	return &encryptedVars, nil
+}
+
+func EncryptVarsList(decryptedVars *[]interface{}, password string) (*[]interface{}, error) {
+	encryptedVarsArray := make([]interface{}, len(*decryptedVars))
+	for id, value := range *decryptedVars {
+		switch v := value.(type) {
+		case map[string]interface{}:
+			subEncryptedVars, err := EncryptVars(&v, password)
+			if err != nil {return nil, err}
+			encryptedVarsArray[id] = subEncryptedVars
+		case string:
+			encryptedVar, err := EncryptData(v, password)
+			if err != nil {return nil, err}
+			encryptedVarsArray[id] = encryptedVar
+		case []interface{}:
+			encryptedVarsList, err := EncryptVarsList(&v, password)
+			if err != nil {return nil, err}
+			encryptedVarsArray[id] = encryptedVarsList
+		}
+
+	}
+	return &encryptedVarsArray, nil
 }
 
 func EncryptData(data string, password string) (map[string]string, error) {
