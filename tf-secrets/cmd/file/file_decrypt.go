@@ -43,7 +43,7 @@ func decryptFile(filePath string, dstFilePath string, password string) error {
 	if err != nil {
 		return errors.New(fmt.Sprintf("Error decrypting file %s : %s", filePath, err))
 	}
-	err = ioutil.WriteFile(dstFilePath, decryptedData, 600)
+	err = ioutil.WriteFile(dstFilePath, decryptedData, 0600)
 	if err != nil {
 		fmt.Println(dstFilePath)
 		return errors.New(fmt.Sprintf("Error writing file %s : %s", dstFilePath, err))

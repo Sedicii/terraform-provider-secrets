@@ -20,6 +20,17 @@ data "secrets_var_file_decrypt" "many_secrets" {
   password = "test_password"
 }
 
+data "secrets_var_file_decrypt" "no_secrets" {
+  var_file_path = "${"${path.module}/non_existing_file.secrets.tfvars"}"
+  password = "test_password"
+}
+
+
+output "no_file" {
+  value = "${data.secrets_var_file_decrypt.no_secrets.values}"
+}
+
+
 output "github_oauth_token" {
   value = "${data.secrets_decrypt.github_oauth_token.value}"
 }
