@@ -19,8 +19,14 @@ This provider plugin is maintained by [Sedicii](https://sedicii.com/).
 
 ### Installation
 
+#### Terraform =< 11 
 ```bash
 curl https://raw.githubusercontent.com/Sedicii/terraform-provider-secrets/master/scripts/install-secrets-tf-plugin.sh | bash
+```
+#### Terraform => 12 
+
+```bash
+curl https://raw.githubusercontent.com/Sedicii/terraform-provider-secrets/master/scripts/install-secrets-tf12-plugin.sh | bash
 ```
 
 ### Usage
